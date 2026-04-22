@@ -1,29 +1,6 @@
 <script lang="ts">
 	import StorePreview from '../components/StorePreview.svelte';
-
-	let stores = [
-		{
-			name: 'ร้านถ่ายเอกสารศิลปกรรม 3',
-			location: 'อาคารศิลปกรรม 3, โรงอาหารอักษร จุฬาฯ',
-			profile_url: 'https://placehold.co/400',
-			status: 'open',
-			distance: 2.5
-		},
-		{
-			name: 'ร้าน B',
-			location: 'เชียงใหม่',
-			profile_url: 'https://placehold.co/400',
-			status: 'closed',
-			distance: 5.0
-		},
-		{
-			name: 'ร้าน C',
-			location: 'ภูเก็ต',
-			profile_url: 'https://placehold.co/400',
-			status: 'open',
-			distance: 1.2
-		}
-	];
+	import { stores } from '../lib/dummy';
 </script>
 
 <div class="page-wrapper">
@@ -34,6 +11,7 @@
 	<div class="stores">
 		{#each stores as store (store.name)}
 			<StorePreview
+				id={store.id}
 				name={store.name}
 				location={store.location}
 				profile_url={store.profile_url}
@@ -45,6 +23,10 @@
 </div>
 
 <style lang="scss">
+	.page-wrapper {
+		padding-top: 1.5rem;
+	}
+
 	.topper {
 		margin-bottom: 1rem;
 	}
