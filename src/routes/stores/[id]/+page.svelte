@@ -32,7 +32,8 @@
 	</div>
 
 	<nav class="file-uploader">
-		<h3>Upload</h3>
+		<h3>อัปโหลดไฟล์</h3>
+		<p>ไฟล์ .pdf ไม่เกิน 100MB</p>
 	</nav>
 </div>
 
@@ -106,6 +107,7 @@
 		border-top-right-radius: 0.5rem;
 
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 
