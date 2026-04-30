@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS "public"."print_jobs" (
     "store_id" "uuid",
     "printer_id" "uuid",
     "file_url" "text" NOT NULL,
-    "payment_status" "text" DEFAULT 'pending'::"text",
+    "status" "text" DEFAULT 'pending'::"text",
     "print_status" "text" DEFAULT 'queued'::"text",
     "job_id_os" integer,
     "created_at" timestamp with time zone DEFAULT "now"()

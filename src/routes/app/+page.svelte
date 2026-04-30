@@ -46,15 +46,13 @@
 			return;
 		}
 
-		const { data } = supabase.storage.from('print_files').getPublicUrl(filePath);
-		uploadedUrl = data.publicUrl;
 		uploading = false;
 	}
 
 	async function handleSubmission(event: Event) {
 		event.preventDefault();
 
-		if (!uploadedUrl) {
+		if (!filePath) {
 			uploadError = 'Please upload a file before submitting.';
 			return;
 		}
@@ -63,8 +61,8 @@
 		const { data, error } = await supabase
 			.from('print_jobs')
 			.insert({
-				file_url: uploadedUrl,
-				payment_status: 'pending'
+				file_path: filePath,
+				status: 'pending'
 			})
 			.select()
 			.single();
@@ -99,7 +97,7 @@
 </script>
 
 <main class="page-wrapper">
-	<input type="file" onchange={handleFileChange} />
+	<input type="file" onchange={handleFileChange} accept="image/*, .pdf" />
 
 	{#if uploading}
 		<p>Uploading file...</p>
@@ -109,13 +107,13 @@
 		<p class="error">{uploadError}</p>
 	{/if}
 
-	{#if uploadedUrl}
+	{#if filePath}
 		<p>
-			Link URL: <a href={uploadedUrl} target="_blank" rel="noreferrer">{uploadedUrl}</a>
+			File Path: {filePath}
 		</p>
 	{/if}
 
-	<button disabled={uploading || !uploadedUrl} onclick={handleSubmission}>Pay</button>
+	<button disabled={uploading || !filePath} onclick={handleSubmission}>Pay</button>
 </main>
 
 <style lang="scss">

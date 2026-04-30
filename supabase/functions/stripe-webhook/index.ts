@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
         // 1. Mark as Paid
         const { error } = await supabase
           .from("print_jobs")
-          .update({ payment_status: "paid" })
+          .update({ status: "paid" })
           .eq("id", jobId);
 
         if (error) throw error;

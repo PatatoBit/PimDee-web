@@ -32,6 +32,7 @@ Deno.serve(async (req) => {
   // 2. CALCULATE PRICE (฿1 min vs 5% scaling)
   const ratePerPage = isColor ? 10 : 1;
   const totalAmount = pages * ratePerPage;
+
   // Thai Baht to Satang (฿1 = 100)
   const totalInSatang = Math.max(1000, totalAmount * 100);
   const applicationFee = Math.max(100, totalInSatang * 0.05);
