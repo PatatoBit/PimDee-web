@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
+	import { onMount } from 'svelte';
 
 	let uploadedUrl = $state('');
 	let filePath = $state('');
@@ -94,9 +95,46 @@
 		// Redirect to the Stripe checkout page
 		window.location.href = checkoutData.url;
 	}
+
+	const storeId = 'fde89974-1473-4445-bf25-68486496b328';
+	let storeName = $state('');
+	let printerName = $state('');
+
+	// Get store name and printer name
+
+	onMount(async () => {
+		const { data: storeData, error: storeError } = await supabase
+			.from('stores')
+			.select('name')
+			.eq('id', storeId)
+			.single();
+
+		if (storeError) {
+			storeName = 'Unknown Store';
+		} else {
+			storeName = storeData.name;
+		}
+
+		// Fetch default printer using the store ID
+		const { data: printerData, error: printerError } = await supabase
+			.from('printers')
+			.select('system_name')
+			.eq('store_id', storeId)
+			.eq('is_default', true)
+			.single();
+
+		if (printerError) {
+			printerName = 'Unknown Printer';
+		} else {
+			printerName = printerData.system_name;
+		}
+	});
 </script>
 
 <main class="page-wrapper">
+	<h2>Upload Your File to {storeName}</h2>
+	<p>Default Printer: {printerName}</p>
+
 	<input type="file" onchange={handleFileChange} accept="image/*, .pdf" />
 
 	{#if uploading}
